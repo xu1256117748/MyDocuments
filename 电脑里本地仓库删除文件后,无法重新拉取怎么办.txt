@@ -1,0 +1,10 @@
+1.复制如下命令后,进入对应文件夹,打开git面板,[右键粘贴]即可,稍等片刻~
+
+git fetch --all
+git reset --hard main/main
+git status
+
+
+2.连接地址样例收藏:
+git@github.com:xu1256117748/MyDocuments_Private.git
+https://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@github.com/xu1256117748/MyDocuments_Private.git
