@@ -1,0 +1,9 @@
+Discuz_forum_234514:
+	
+Discuz_avatar_redirect:	https://www.sayhuahuo.xyz/home.php?mod=spacecp&ac=avatar
+
+RPG Config:	N4IghgNg7mCeDOARM8AWIBcAzS8CmANCAMYD2AtuWAHYAmASnuUwEZ4BOmOE+RLA5uQBqpCAFdmmAAx9+8EeMkYZIZgol5pRfOqVSAvkAAA=
+
+Discuz_is_blindman:
+
+RPG Global	:NoOwrgNhA0DeBEBzCB7ARgQwgSQCbwC54AlABQHEBZANXmngBcBLBiAU0PkEagwawdA/lMClxnXgBjABYYAThhEM2kgM6FgweAEFZKSQEY6ABgC6B+gDMZbJQRXrNO/UfoAHCBgCezALYciATj0EAJgAOQIDhTwsGDA9HQm0ANiCAFm0A+IB2AFYAZj1cgF8DIA=
