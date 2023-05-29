@@ -28,17 +28,36 @@ UEsDBBQAAgAIAExTt1bZfJrBLgUAAD4HAAAOABEA5K/AwMb3zbfP8S5ibXBVVA0AB86UbGTeL3BkzpRs
 
 [Script]
 
+
 /**
 代码测试区
 */
 
-
+Call XYKAPI_浏览器_页面向下滚动(1)
+TracePrint 浏览器头像坐标_x&浏览器头像坐标_y
 
 /**
 =====================================XYK-API======================================
 */
 /**
-查看常用到的系统命令及其示例
+已有分类:
+	XYKAPI_
+	生成 
+	区域识图_ 
+	浏览器_
+*/
+
+/**
+XYKAPI所传递的参数(无需复制到新脚本顶部,API对应函数均已做非空判断): 
+*/
+浏览器头像坐标_x = - 1 
+浏览器头像坐标_y = - 1 
+浏览器上滚坐标_x = - 1 
+浏览器上滚坐标_y = - 1 
+/**
+查看常用到的系统命令及其示例 
+ Call XYKAPI_查看常用到的系统命令及其示例
+ 
 */
 Function  XYKAPI_查看常用到的系统命令及其示例
 	TracePrint "001.获取粘贴板中的内容,赋值给变量"
@@ -53,8 +72,11 @@ Function  XYKAPI_查看常用到的系统命令及其示例
 	TracePrint "命令: Plugin.Sys.GetTime"
 	TracePrint "示例:T1 = Plugin.Sys.GetTime "
 	TracePrint "---------------------------------------------------------"
-End Function
+	TracePrint "004.(可后台)运行电脑上的文件/程序"
+	TracePrint "命令: Plugin.Sys.GetTime"
+	TracePrint "示例:RunApp "&chr(34)&"C:\Users\12561\Desktop\按键精灵注册大漠插件.txt"&chr(34)
 
+End Function
 
 /**
 解析粘贴板中的百度云链接,提取其中的提取码,
@@ -153,7 +175,7 @@ End Function
 /**
 关闭浏览器右侧所有标签页
 */
-Function XYKAPI_关闭浏览器右侧所有标签页(浏览器标签页_x, 浏览器标签页_y)
+Function XYKAPI_浏览器_关闭右侧所有标签页(浏览器标签页_x, 浏览器标签页_y)
     MoveTo 浏览器标签页_x, 浏览器标签页_y
     Delay 100
     RightClick 1
@@ -169,33 +191,42 @@ End Function
 自动识别浏览器右上方头像,据此判断滚动轴位置
 拉到底部的值传0,可在不拉行动条的情况下获取向上滚动的坐标
 */
-Function XYKAPI_将浏览器页面滚动轴拉到底部(是否拉到底部)
-    Dim 向上滚动的点击坐标(2),识图坐标
-    识图坐标 = XYKAPI_区域识图_自动循环识图("浏览器头像", 0.95)
-    向上滚动的点击坐标(0) = 识图坐标(0) + 20
-    向上滚动的点击坐标(1) = 识图坐标(1) + 50
+Function XYKAPI_浏览器_页面滚动轴拉到底部(是否拉到底部)
+	Dim 识图坐标
+	If 浏览器头像坐标_x ="" or 浏览器头像坐标_x < 0  Then 
+		识图坐标 = XYKAPI_区域识图_自动循环识图("浏览器头像", 0.95)
+    	浏览器头像坐标_x = 识图坐标(0)
+    	浏览器头像坐标_y = 识图坐标(1)
+    	浏览器上滚坐标_x = 浏览器头像坐标_x + 20
+    	浏览器上滚坐标_y = 浏览器头像坐标_y + 50
+	End If
+
     If 是否拉到底部 = 1 Then 
-        MoveTo 向上滚动的点击坐标(0), 1043
+        MoveTo 浏览器上滚坐标_x, 1043
         Delay 100
         LeftClick 20
         Delay 100
+        /**
         // 再次微调到底部
-        MoveTo 识图坐标(0), 识图坐标(1) + 50
+        MoveTo 浏览器头像坐标_x, 浏览器头像坐标_y + 50
         For 5
         	MouseWheel - 1 
         	Delay 100
         Next
+        */
+
         TracePrint "已将浏览器滚动轴拉到底部"
     End If
-    XYKAPI_将浏览器页面滚动轴拉到底部=向上滚动的点击坐标
+    XYKAPI_浏览器_页面滚动轴拉到底部=向上滚动的点击坐标
 End Function
 /**
 将页面向上滚动
 */
-Function XYKAPI_将浏览器页面向上滚动(滚动次数)
-	Dim 向上滚动的点击坐标
-    向上滚动的点击坐标 = XYKAPI_将浏览器页面滚动轴拉到底部(0)
-    MoveTo 向上滚动的点击坐标(0), 向上滚动的点击坐标(1)
+Function XYKAPI_浏览器_页面向上滚动(滚动次数)
+	If 浏览器上滚坐标_x = "" or 浏览器上滚坐标_x < 0 Then 
+		Call XYKAPI_浏览器_页面滚动轴拉到底部(0)
+	End If
+    MoveTo 浏览器上滚坐标_x, 浏览器上滚坐标_y
     Delay 100
     LeftClick 滚动次数
     Delay 1500
@@ -204,12 +235,25 @@ End Function
 /**
 将页面向下滚动
 */
-Function XYKAPI_将浏览器页面向下滚动(滚动次数)
-	Dim 向上滚动的点击坐标
-    向上滚动的点击坐标 = XYKAPI_将浏览器页面滚动轴拉到底部(0)
-    MoveTo 向上滚动的点击坐标(0), 1043
+Function XYKAPI_浏览器_页面向下滚动(滚动次数)
+	If 浏览器上滚坐标_x = "" or 浏览器上滚坐标_x < 0 Then 
+		Call XYKAPI_浏览器_页面滚动轴拉到底部(0)
+	End If
+    MoveTo 浏览器上滚坐标_x, 1043
     Delay 100
     LeftClick 滚动次数
     Delay 1500
     TracePrint "已将浏览器页面下滚指定次数:"&滚动次数&"次"
+End Function
+/**
+生成随机整数(指定区间,可指定负数,左闭右闭,[-3,3])
+
+*/
+Function XYKAPI_生成随机整数(包含的最小值, 包含的最大值)
+	Randomize
+	If 包含的最小值 < 包含的最大值 Then 
+		XYKAPI_生成随机整数 =  Int((包含的最大值 - 包含的最小值 + 1) * Rnd + 包含的最小值)
+	Else 
+		XYKAPI_生成随机整数 =  Int((包含的最小值 - 包含的最大值 + 1) * Rnd + 包含的最大值)
+	End If
 End Function
