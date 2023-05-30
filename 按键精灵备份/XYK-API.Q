@@ -30,21 +30,22 @@ UEsDBBQAAgAIAExTt1bZfJrBLgUAAD4HAAAOABEA5K/AwMb3zbfP8S5ibXBVVA0AB86UbGTeL3BkzpRs
 
 
 /**
-代码测试区
+XYK-API代码测试区
 */
 
-Call XYKAPI_浏览器_页面向下滚动(1)
-TracePrint 浏览器头像坐标_x&浏览器头像坐标_y
 
 /**
 =====================================XYK-API======================================
 */
 /**
-已有分类:
-	XYKAPI_
-	生成 
+已有分类 
+	帮助文档_ 
+	字符串_ 
 	区域识图_ 
-	浏览器_
+	浏览器_ 
+	随机工厂_ 
+	常用抽取_ 
+	
 */
 
 /**
@@ -56,10 +57,8 @@ XYKAPI所传递的参数(无需复制到新脚本顶部,API对应函数均已做非空判断):
 浏览器上滚坐标_y = - 1 
 /**
 查看常用到的系统命令及其示例 
- Call XYKAPI_查看常用到的系统命令及其示例
- 
 */
-Function  XYKAPI_查看常用到的系统命令及其示例
+Function  帮助文档_查看常用到的系统命令及其示例
 	TracePrint "001.获取粘贴板中的内容,赋值给变量"
 	TracePrint "命令:Plugin.Sys.GetCLB()"
 	TracePrint "示例:baidu_url = Plugin.Sys.GetCLB()"
@@ -75,14 +74,13 @@ Function  XYKAPI_查看常用到的系统命令及其示例
 	TracePrint "004.(可后台)运行电脑上的文件/程序"
 	TracePrint "命令: Plugin.Sys.GetTime"
 	TracePrint "示例:RunApp "&chr(34)&"C:\Users\12561\Desktop\按键精灵注册大漠插件.txt"&chr(34)
-
 End Function
 
 /**
 解析粘贴板中的百度云链接,提取其中的提取码,
 如果不包含提取码仍然会返回错误的提取码,不会报错
 */
-Function XYKAPI_从百度云分享链接中截取提取码(百度云分享链接)
+Function 字符串_从百度云分享链接中截取提取码(百度云分享链接)
     Dim index,提取码
     index = Instr(1, 百度云分享链接, "pwd=")// 获取百度字符串中的pwd=的下标
     提取码 = Mid(百度云分享链接, index + 4, 4)// 截取pwd=xxxx最后四位数获取提取码
@@ -94,7 +92,7 @@ Function XYKAPI_从百度云分享链接中截取提取码(百度云分享链接)
         TracePrint "要截取的百度云分享链接的内容如下:"
         TracePrint 百度云分享链接
     End If
-     XYKAPI_从百度云分享链接中截取提取码 = 提取码// 定义调用函数可获取的返回值
+     字符串_从百度云分享链接中截取提取码 = 提取码// 定义调用函数可获取的返回值
 	/**
 	调用此函数的代码示例: 
 	https://pan.baidu.com/s/1dapRN7qnqU0CeU-1OhC11Q?pwd=f6ur
@@ -102,14 +100,30 @@ Function XYKAPI_从百度云分享链接中截取提取码(百度云分享链接)
 		TracePrint "提取码:  "&code
 	*/
 End Function
+
+/**
+检测粘贴板中的内容是否包含某些内容,返回下标,>0为包含 =0为不包含
+*/
+Function 字符串_检测源文本是否包含目标文本内容(源文本, 要包含的内容)
+	Dim 检测结果
+    检测结果 = Instr(1, 源文本, 要包含的内容)
+    If 检测结果 = 0 Then 
+        TracePrint "源文本不包含  " & 要包含的内容 & ",  源文本为:"
+        TracePrint 源文本
+    Else 
+        TracePrint "源文本包含  " & 要包含的内容 & ",  源文本为::"
+        TracePrint 源文本
+    End If
+    字符串_检测源文本是否包含目标文本内容 = 检测结果
+End Function
 /**
 区域识图 - 单次识图不循环,返回识图坐标x和y, 
-识图失败会自动在1s后重试,直到识图成功
+识图失败返回-1,-1
 返回值接取示例代码:
-result = 区域识图_自动循环识图("浏览器头像",0.95)
+result = 区域识图_单次识图不循环("浏览器头像",0.95)
 TracePrint "x="&result(0)&"  y="&result(1)
 */
-Function XYKAPI_区域识图_单次识图不循环(识图附件名, 识图精度)
+Function 区域识图_单次识图不循环(识图附件名, 识图精度)
 	Dim file_path,图片识别_x,图片识别_y,识图结果坐标(2)
     file_path = "Attachment:\" & 识图附件名 & ".bmp"
     TracePrint "正在对该附件路径进行识图(不循环):" & file_path
@@ -121,7 +135,7 @@ Function XYKAPI_区域识图_单次识图不循环(识图附件名, 识图精度)
     End If
     识图结果坐标(0) = 图片识别_x
     识图结果坐标(1) = 图片识别_y
-    XYKAPI_区域识图_单次识图不循环 = 识图结果坐标
+    区域识图_单次识图不循环 = 识图结果坐标
 End Function
 /**
 区域识图 - 自动识图 , 返回识图坐标x和y, 
@@ -130,7 +144,7 @@ End Function
 result = 区域识图_自动循环识图("浏览器头像",0.95)
 TracePrint "x="&result(0)&"  y="&result(1)
 */
-Function XYKAPI_区域识图_自动循环识图(识图附件名, 识图精度)
+Function 区域识图_自动循环识图(识图附件名, 识图精度)
 	Dim file_path,图片识别_x,图片识别_y,识图结果坐标(2)
     file_path = "Attachment:\" & 识图附件名 & ".bmp"
     TracePrint "正在对该附件路径进行识图:" & file_path
@@ -145,37 +159,12 @@ Function XYKAPI_区域识图_自动循环识图(识图附件名, 识图精度)
     TracePrint "附件识图成功:" & file_path & "  x="&图片识别_x&"  y="&图片识别_y
     识图结果坐标(0) = 图片识别_x
     识图结果坐标(1) = 图片识别_y
-    XYKAPI_区域识图_自动循环识图 = 识图结果坐标
-End Function
-/**
- 全局函数 移动鼠标到指定位置并点击一次
-*/
-Function XYKAPI_移动鼠标到指定位置并点击一次(x位置,y位置)
-    MoveTo x位置, y位置
-    Delay 100
-    LeftClick 1
-    Delay 100
-    TracePrint "任务完成:移动鼠标到指定位置并点击一次,x:"&x位置&"  y:"&y位置
-End Function
-/**
-检测粘贴板中的内容是否包含某些内容,返回下标,>0为包含 =0为不包含
-*/
-Function XYKAPI_检测源文本是否包含目标文本内容(源文本, 要包含的内容)
-	Dim 检测结果
-    检测结果 = Instr(1, 源文本, 要包含的内容)
-    If 检测结果 = 0 Then 
-        TracePrint "源文本不包含  " & 要包含的内容 & "  源文本为:"
-        TracePrint 源文本
-    Else 
-        TracePrint "源文本包含  " & 要包含的内容 & "源文本为::"
-        TracePrint 源文本
-    End If
-    XYKAPI_检测源文本是否包含目标文本内容 = 检测结果
+    区域识图_自动循环识图 = 识图结果坐标
 End Function
 /**
 关闭浏览器右侧所有标签页
 */
-Function XYKAPI_浏览器_关闭右侧所有标签页(浏览器标签页_x, 浏览器标签页_y)
+Function 浏览器_关闭右侧所有标签页(浏览器标签页_x, 浏览器标签页_y)
     MoveTo 浏览器标签页_x, 浏览器标签页_y
     Delay 100
     RightClick 1
@@ -191,10 +180,10 @@ End Function
 自动识别浏览器右上方头像,据此判断滚动轴位置
 拉到底部的值传0,可在不拉行动条的情况下获取向上滚动的坐标
 */
-Function XYKAPI_浏览器_页面滚动轴拉到底部(是否拉到底部)
+Function 浏览器_页面滚动轴拉到底部(是否拉到底部)
 	Dim 识图坐标
 	If 浏览器头像坐标_x ="" or 浏览器头像坐标_x < 0  Then 
-		识图坐标 = XYKAPI_区域识图_自动循环识图("浏览器头像", 0.95)
+		识图坐标 = 区域识图_自动循环识图("浏览器头像", 0.95)
     	浏览器头像坐标_x = 识图坐标(0)
     	浏览器头像坐标_y = 识图坐标(1)
     	浏览器上滚坐标_x = 浏览器头像坐标_x + 20
@@ -217,14 +206,14 @@ Function XYKAPI_浏览器_页面滚动轴拉到底部(是否拉到底部)
 
         TracePrint "已将浏览器滚动轴拉到底部"
     End If
-    XYKAPI_浏览器_页面滚动轴拉到底部=向上滚动的点击坐标
+    浏览器_页面滚动轴拉到底部=向上滚动的点击坐标
 End Function
 /**
-将页面向上滚动
+将页面向上滚动(需添加附件:浏览器头像位图)
 */
-Function XYKAPI_浏览器_页面向上滚动(滚动次数)
+Function 浏览器_页面向上滚动(滚动次数)
 	If 浏览器上滚坐标_x = "" or 浏览器上滚坐标_x < 0 Then 
-		Call XYKAPI_浏览器_页面滚动轴拉到底部(0)
+		Call 浏览器_页面滚动轴拉到底部(0)
 	End If
     MoveTo 浏览器上滚坐标_x, 浏览器上滚坐标_y
     Delay 100
@@ -233,11 +222,11 @@ Function XYKAPI_浏览器_页面向上滚动(滚动次数)
     TracePrint "已将浏览器页面上滚指定次数:"&滚动次数&"次"
 End Function
 /**
-将页面向下滚动
+浏览器_页面向下滚动(需添加附件:浏览器头像位图)
 */
-Function XYKAPI_浏览器_页面向下滚动(滚动次数)
+Function 浏览器_页面向下滚动(滚动次数)
 	If 浏览器上滚坐标_x = "" or 浏览器上滚坐标_x < 0 Then 
-		Call XYKAPI_浏览器_页面滚动轴拉到底部(0)
+		Call 浏览器_页面滚动轴拉到底部(0)
 	End If
     MoveTo 浏览器上滚坐标_x, 1043
     Delay 100
@@ -246,14 +235,143 @@ Function XYKAPI_浏览器_页面向下滚动(滚动次数)
     TracePrint "已将浏览器页面下滚指定次数:"&滚动次数&"次"
 End Function
 /**
-生成随机整数(指定区间,可指定负数,左闭右闭,[-3,3])
-
+随机工厂_生成随机整数(指定区间,可指定负数,左闭右闭,[-3,3])
 */
-Function XYKAPI_生成随机整数(包含的最小值, 包含的最大值)
+Function 随机工厂_生成随机整数(包含的最小值, 包含的最大值)
+	Dim 随机整数
 	Randomize
 	If 包含的最小值 < 包含的最大值 Then 
-		XYKAPI_生成随机整数 =  Int((包含的最大值 - 包含的最小值 + 1) * Rnd + 包含的最小值)
+		随机整数 =  Int((包含的最大值 - 包含的最小值 + 1) * Rnd + 包含的最小值)
 	Else 
-		XYKAPI_生成随机整数 =  Int((包含的最小值 - 包含的最大值 + 1) * Rnd + 包含的最大值)
+		随机整数 =  Int((包含的最小值 - 包含的最大值 + 1) * Rnd + 包含的最大值)
 	End If
+	随机工厂_生成随机整数 = 随机整数
+End Function
+/**
+ 常用抽取_移动鼠标到指定位置并点击一次
+*/
+Function 常用抽取_移动鼠标到指定位置并点击一次(x位置,y位置)
+    MoveTo x位置, y位置
+    Delay 100
+    LeftClick 1
+    Delay 100
+    TracePrint "任务完成:移动鼠标到指定位置并点击一次,x:"&x位置&"  y:"&y位置
+End Function
+
+/**
+拖动鼠标到从a点到b点,参数说明:
+起点坐标_x,起点坐标_y 鼠标拖动起点的坐标,如果鼠标初始位置不在此处,则会瞬间移动到此处
+终点坐标_x,终点坐标_y 鼠标拖动终点的坐标
+经实际测试,单次移动像素为 1 时,移动 1000 像素实际耗时 15 秒,此时参数移动耗时如果 <15 秒将不起作用(但1毫秒可瞬间完成)
+经实际测试,单次移动像素为 2 时,移动 1000 像素实际耗时 7.5 秒,此时参数移动耗时如果 <7.5 秒将不起作用(但1毫秒可瞬间完成)
+经实际测试,单次移动像素为 3 时,移动 1000 像素实际耗时 5 秒,此时参数移动耗时如果 <5 秒将不起作用(但1毫秒可瞬间完成)
+经实际测试,单次移动像素为 4 时,移动 1000 像素实际耗时 4 秒,此时参数移动耗时如果 <4 秒将不起作用(但1毫秒可瞬间完成)
+经实际测试,单次移动像素为 5 时,移动 1000 像素实际耗时 3 秒,此时参数移动耗时如果 <3 秒将不起作用(但1毫秒可瞬间完成)
+经实际测试,单次移动像素为 6 时,移动 1000 像素实际耗时 2.5 秒,此时参数移动耗时如果 <2.5 秒将不起作用(但1毫秒可瞬间完成)
+
+推荐参数 
+推荐一: 移动耗时_0毫秒=0, 单次移动像素数_1 高速实现逐像素移动,耗时300-400毫秒
+其他推荐 (根据耗时)
+ 
+移动耗时_0毫秒,单次移动像素数_1	实际耗时
+0 毫秒			1				406 毫秒
+1000 毫秒		1				14.6  秒 + 
+1000 毫秒		2				7.3   秒 +
+1000 毫秒		3				4.8   秒
+1000 毫秒		4				3.6   秒
+1000 毫秒		5				2.9   秒	
+1000 毫秒		6				2.4   秒
+*/
+
+Function 常用提取_鼠标平滑移动(起点坐标_x, 起点坐标_y, 终点坐标_x, 终点坐标_y, 移动耗时_0毫秒, 单次移动像素数_1)
+
+Dim mx, tx, ty, t1, t2
+Dim 鼠标当前坐标_x, 鼠标当前坐标_y
+
+GetCursorPos 鼠标当前坐标_x, 鼠标当前坐标_y
+
+// 如果当前鼠标坐标不是起点坐标则先移动到起点坐标
+If 鼠标当前坐标_x <> 起点坐标_x or 鼠标当前坐标_y <> 起点坐标_y Then 
+	MoveTo 起点坐标_x, 起点坐标_y
+	Delay 100
+End If
+//TracePrint 鼠标当前坐标_x&","&鼠标当前坐标_y
+tx=abs(起点坐标_x-终点坐标_x)
+ty=abs(起点坐标_y-终点坐标_y)
+if tx>=ty
+	mx=tx
+else
+	mx=ty
+End If
+t1 = Plugin.GetSysInfo.GetTime
+If mx > 0 Then 
+	For i = 0 To mx Step 单次移动像素数_1
+	MoveTo int((终点坐标_x * i + 起点坐标_x * (mx - i)) / mx), int((终点坐标_y * i + 起点坐标_y * (mx - i)) / mx)
+	Delay int(移动耗时_0毫秒 / mx * 单次移动像素数_1)
+	Next
+else
+	Delay 移动耗时_0毫秒
+	TracePrint "进行了大间隔"
+End If
+MoveTo 终点坐标_x, 终点坐标_y
+t2 = Plugin.GetSysInfo.GetTime
+TracePrint "本次鼠标拖拽结果日志(拖拽完成后打印):"
+TracePrint "拖拽参数如下:"
+TracePrint "起点坐标:" & 起点坐标_x & "," & 起点坐标_y & " 终点坐标:" & 终点坐标_x & "," & 终点坐标_y
+TracePrint "设定耗时:" & 移动耗时_0毫秒 & "毫秒,设定单步像素数:" & 单次移动像素数_1
+TracePrint "移动次数:" & mx & "/" & 单次移动像素数_1 & "=" & int(mx / 单次移动像素数_1)&"  ,单移间隔:" & int(移动耗时_0毫秒 / mx * 单次移动像素数_1)&" 毫秒"
+TracePrint "实际拖动耗时: "&(t2-t1)&" 毫秒"
+End Function
+
+/**
+常用提取_拖拽选中文本
+*/
+Function 常用提取_拖拽选中(起点坐标_x, 起点坐标_y, 终点坐标_x, 终点坐标_y)
+	MoveTo 起点坐标_x, 起点坐标_y
+	Delay 100
+	LeftDown 1
+	Delay 100
+	MoveTo 终点坐标_x, 终点坐标_y
+	Delay 100
+	LeftUp 1
+	Delay 100
+	TracePrint "已拖拽选中指定区域:("&起点坐标_x& ","&起点坐标_y&")<==>("&终点坐标_x&","& 终点坐标_y&")"
+End Function
+/**
+常用提取_全选 Ctrl+A
+*/
+Function 常用提取_全选
+	KeyDown 17, 1
+	KeyPress 65, 1
+	KeyUp 17, 1
+	Delay 100
+	TracePrint "已全选"
+End Function
+
+/**
+常用提取_复制 Ctrl+C
+*/
+Function 常用提取_复制
+	KeyDown 17, 1
+	KeyPress 67, 1
+	KeyUp 17, 1
+	Delay 100
+	TracePrint "已复制"
+End Function
+/**
+常用提取_粘贴 Ctrl+V
+*/
+Function 常用提取_粘贴
+	KeyDown 17, 1
+	KeyPress 86, 1
+	KeyUp 17, 1
+	Delay 100
+	TracePrint "已粘贴"
+End Function
+/**
+常用提取_拖拽选中并复制 
+*/
+Function 常用提取_拖拽选中并复制(起点坐标_x, 起点坐标_y, 终点坐标_x, 终点坐标_y)
+	Call 常用提取_拖拽选中(起点坐标_x, 起点坐标_y, 终点坐标_x, 终点坐标_y)
+	Call 常用提取_复制
 End Function
