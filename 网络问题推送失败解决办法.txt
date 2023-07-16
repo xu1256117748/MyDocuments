@@ -1,0 +1,9 @@
+进入对应的仓库文件夹下,然后使用命令行设置对应的端口：
+
+git config --global http.proxy 127.0.0.1:7890
+
+然后再提交/推送,此时应该还是失败,然后禁用代理:
+
+git config --global --unset http.proxy
+
+此时再提交/推送即可正常
