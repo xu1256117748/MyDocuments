@@ -7,3 +7,6 @@ git config --global http.proxy 127.0.0.1:7890
 git config --global --unset http.proxy
 
 此时再提交/推送即可正常
+
+git config --global http.proxy 127.0.0.1:7890
+git config --global --unset http.proxy
