@@ -1,0 +1,43 @@
+//需要以管理员权限启动
+
+======代码样例======
+@echo off
+echo start reg  ...
+set df=%~dp0
+echo 当前游戏根目录为:%df%,开始添加注册表信息~
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\HOOKSOFT\トラベリングスターズ" /v "InstalledFolder" /t REG_SZ /d %df% /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\トラベリングスターズ" /v "DisplayIcon" /t REG_SZ /d %df%Uninstaller.exe /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\トラベリングスターズ" /v "DisplayName" /t REG_SZ /d "トラベリングスターズ" /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\トラベリングスターズ" /v "Publisher" /t REG_SZ /d "HOOKSOFT" /f
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\トラベリングスターズ" /v "UninstallString" /t REG_SZ /d %df%Uninstaller.exe /f
+echo 注册表信息添加完成~
+pause
+@echo on
+
+======代码释义======
+set df=%~dp0 			==> 创建变量df,其值为%~dp0,表示为批处理当前所在路径
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\HOOKSOFT\トラベリングスターズ" /v "InstalledFolder" /t REG_SZ /d %df% /f
+表示在 "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\トラベリングスターズ" 项下
+创建键值对,其中:
+/v "DisplayIcon" 		==> 名称 为 DisplayIcon
+/t REG_SZ 				==> 类型 为 REG_SZ
+/d %df%Uninstaller.exe 	==> 数据 为 当前坐在路径下的 Uninstaller.exe 的全路径
+/f						==> 表示不提示强行修改
+PS:如果项不存在则会自动创建项并在该项下创建键值对
+
+//======↓↓↓代码模写区↓↓↓======
+
+@echo off
+echo start reg  ...
+set df=%~dp0
+echo 当前游戏根目录为:%df%,开始添加注册表信息~
+
+
+
+
+
+echo 注册表信息添加完成~
+pause
+@echo on
+
+//======↑↑↑代码模写区↑↑↑======
